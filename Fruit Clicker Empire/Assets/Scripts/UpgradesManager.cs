@@ -7,6 +7,8 @@ using UnityEngine.UI;
 public class UpgradesManager : MonoBehaviour
 {
     public static UpgradesManager instance;
+    private Controller controller;
+    public float clickPow;
     private void Awake()
     {
         instance = this;
@@ -27,16 +29,19 @@ public class UpgradesManager : MonoBehaviour
     public string[] clickUpgradeNames;
 
     public BigDouble[] clickUpgradesBaseCost;
-    public BigDouble[] clickUpgradeCostMult;
+    public BigDouble clickUpgradeCostMult;
     public BigDouble[] clickUpgradesBasePower;
 
+    //Initiates upgrade system on start
     public void StartUpgradeManager()
     {
+
         clickUpgradeNames = new[] { "Click Power + 1", "Click Power +5", "Click Power +10"};
         clickUpgradesBaseCost = new BigDouble[] { 10, 50, 100 };
-        clickUpgradeCostMult = new BigDouble[] { 1.25, 1.35, 1.55 };
+        clickUpgradeCostMult = new BigDouble(1.1);
         clickUpgradesBasePower = new BigDouble[] { 1, 5, 10 };
 
+        //For every upgrade in clickUpgradeLevel.Count create a new instance of clickUpgradePrefab and assign it an ID
         for (int i = 0; i < Controller.instance.data.clickUpgradeLevel.Count; i++)
         {
             Upgrades upgrade = Instantiate(clickUpgradePrefab, clickUpgradesPanel.transform);
@@ -47,9 +52,13 @@ public class UpgradesManager : MonoBehaviour
 
         UpdateclickUpgradeUI();
 
-        Methods.UpgradeCheck( Controller.instance.data.clickUpgradeLevel, 3);
+        Methods.UpgradeCheck(Controller.instance.data.clickUpgradeLevel, 3);
     }
 
+    private static void CheckClickPow()
+    {
+        clickPow = controller.ClickPower();
+    }
     //Updates the upgrade UI when called
     public void UpdateclickUpgradeUI(int UpgradeID = -1)
     {
@@ -77,10 +86,11 @@ public class UpgradesManager : MonoBehaviour
     //Returns the cost of upgrade
     public BigDouble ClickUpgradeCost(int UpgradeID)
     {
-        return clickUpgradesBaseCost[UpgradeID] * BigDouble.Pow(clickUpgradeCostMult[UpgradeID], Controller.instance.data.clickUpgradeLevel[UpgradeID]);
+        //return clickUpgradesBaseCost[UpgradeID] * BigDouble.Pow(clickUpgradeCostMult[UpgradeID], Controller.instance.data.clickUpgradeLevel[UpgradeID]);
+        return clickUpgradesBaseCost[UpgradeID] * (clickUpgradeCostMult);
     }
 
-    //Purchase upgrade if enough moneyh
+    //Purchase upgrade if enough money
     public void BuyUpgrade(int UpgradeID)
     {
         var data = Controller.instance.data;

@@ -16,9 +16,6 @@ public class appleTree : MonoBehaviour
         //Fetch Rigidbody2D of apppleTree so that it can be clicked on
         GetComponent<Rigidbody2D>();
         ATA = AppleTree.GetComponent<Animation>();
-
-
-
     }
 
 

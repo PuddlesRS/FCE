@@ -11,11 +11,11 @@ public class Methods : MonoBehaviour
         return Enumerable.Repeat(default(T), capacity).ToList();
     }
 
-    public static void UpgradeCheck<T>(List<T> list, int length) where T : new()
+    public static void UpgradeCheck<T>(ref List<T> list, int length) where T : new()
     {
         try
         {
-            if (list.Count == 0) list = new T[length].ToList();
+            if (list.Count == 0) list = CreatList<T>(length); ;
             while (list.Count < length) list.Add(new T());
         }
         catch

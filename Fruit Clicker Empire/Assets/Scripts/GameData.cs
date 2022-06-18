@@ -15,7 +15,7 @@ public class GameData
     {
         money = 0;
 
-        clickUpgradeLevel = new int[3].ToList();
+        clickUpgradeLevel = new int[4].ToList();
         productionUpgradeLevel = new int[4].ToList();
     }
 }

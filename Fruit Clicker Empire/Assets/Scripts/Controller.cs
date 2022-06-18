@@ -17,6 +17,7 @@ public class Controller : MonoBehaviour
 
     GameObject AppleTree;
     
+    //Determines clickPower
      public BigDouble ClickPower()
     {
         BigDouble total = 1;
@@ -39,6 +40,7 @@ public class Controller : MonoBehaviour
         moneyText.text = "$" + data.money;
     }
 
+    //Increase money by clickPower
     public void HarvestApples()
     {
         data.money += ClickPower();
